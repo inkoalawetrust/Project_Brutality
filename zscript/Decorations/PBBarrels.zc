@@ -20,17 +20,17 @@ Class NewBarrelExploFX : Actor
 	}
 }
 
-enum PBBarrelStatus
-{
-	PBB_Bloody=0,
-	PBB_Frozen=0,
-	PBB_MeleeDamaged=0, //0 normal, 1 punched once, 2 kicked or punched twice
-	PBB_AxeCut=0, //0 normal, 1 cut but spewing, 2 finished spewing
-	PBB_BulletHoles=0, //0 normal, 1 shell pellets, 2 large hole, 3 both
-};
-
 class PB_Barrel : Actor Replaces ExplosiveBarrel
 {
+	enum PBBarrelStatus
+	{
+		PBB_Bloody=0,
+		PBB_Frozen=0,
+		PBB_MeleeDamaged=0, //0 normal, 1 punched once, 2 kicked or punched twice
+		PBB_AxeCut=0, //0 normal, 1 cut but spewing, 2 finished spewing
+		PBB_BulletHoles=0, //0 normal, 1 shell pellets, 2 large hole, 3 both
+	};
+
 	default
 	{
 		damagefactor "Trample", 0.0;
@@ -53,7 +53,7 @@ class PB_Barrel : Actor Replaces ExplosiveBarrel
 		DamageType "ExplosiveImpact";
 		MONSTER;
 		-COUNTKILL;
-		+NOBLOOD;
+		-NOBLOOD;
 		-FRIENDLY;
 		+NOICEDEATH;
 		+PUSHABLE;
@@ -83,7 +83,7 @@ class PB_Barrel : Actor Replaces ExplosiveBarrel
 		Obituary "$OB_BARREL";
 		PainChance "DontCallTheBaron", 255;
 		Painchance 255;
-		bloodcolor "00 90 00";
+		bloodcolor "Green";
 	}
 	
 	action void PB_BarrelExplode(int ExploType)
@@ -104,19 +104,19 @@ class PB_Barrel : Actor Replaces ExplosiveBarrel
 			break;
 			
 			case 0: //standard 1
-			A_Explode(70,400, 1, 1);
+			A_Explode(70,200, 1, 1);
 			break;
 
 			case 1: //ice 2
-			A_Explode(140,800, 1, 1);
+			A_Explode(140,400, 1, 1);
 			break;
 			
 			case 2: //leaked, half size 0.5
-			A_Explode(50,250, 1, 1);
+			A_Explode(50,100, 1, 1);
 			break;
 			
 			case 3: //dumped out, 1/4th size 0.25
-			A_Explode(25,150, 1, 1);
+			A_Explode(25,50, 1, 1);
 			break;
 		}
 		
@@ -146,7 +146,7 @@ class PB_Barrel : Actor Replaces ExplosiveBarrel
 		}
 		
 		smokefirecount == 1;
-		while(smokefirecount <= 8)
+		while(smokefirecount <= 4)
 		{
 			A_CustomMissile ("HighExplosiveFlames", random (10, 20), 0, random (0, 360), 2, random (10, 90));
 			A_CustomMissile ("BigBlackSmokeLarger", 20, 0, random (0, 360), 2, random (10, 90));
