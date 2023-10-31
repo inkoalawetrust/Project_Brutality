@@ -105,17 +105,17 @@ class PB_PowerIronFeet : PowerIronFeet
 	{
 		If (Passive)
 		{
+			//Reduce elemental damage.
 			If (DamageType == 'Ice' || DamageType == 'Fire' || DamageType == 'Flames' || DamageType == 'Flame' || DamageType == 'Burn' || DamageType == 'Electric')
 			{
 				NewDamage = Damage * 0.75;
-				console.printf ("PB_Radsuit: Took %d %s damage from %s, reduced it to %d damage",damage,damageType,inflictor.getclassname(),newdamage);
 				Return;
 			}
+			//Nullify poison and disintegration damage.
 			If (DamageType == 'PoisonCloud' || DamageType == 'Poison' && Source ||
 			DamageType == 'Disintegrate') //The Daedabus uses fucking disintegrating damage for some stupid reason.
 			{
 				NewDamage = Damage * 0;
-				console.printf ("PB_Radsuit: Took %d %s damage, reduced it to %d damage",damage,damageType,newdamage);
 				Return;
 			}
 		}
